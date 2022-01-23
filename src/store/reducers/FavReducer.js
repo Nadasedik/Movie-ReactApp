@@ -8,7 +8,7 @@ export default function FavReducer(state=intial,action)
         case  "ADD_FAV" :
         return {
             ...state,
-            Fav:[...state.Fav,action.payload]
+            Fav:[...state.Fav,action.payload],
         }
         case  "REMOVE_FAV" :
             return {

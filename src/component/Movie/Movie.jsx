@@ -55,8 +55,8 @@ function goToPreviousPage() {
 
    
     let IsClicked = (id) => {
-        let clicked = selector.find(movie => movie.id === id)
-        return clicked;
+        return selector.find((el) => el.id == id)?true:false;
+        
     }
   
     function addToFav  (e,mov)
@@ -77,15 +77,15 @@ function goToPreviousPage() {
     }
    
 
-    //   useEffect(() =>{
-    //       console.log(searchInput)
-    //     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=11150438bab8902b7d497b7264dcd2ba& language=en-US&query=${searchInput}`)
-    //         .then((res) => {
-    //             setMovie(res.data.results)
+      useEffect(() =>{
+          console.log(searchInput)
+        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=11150438bab8902b7d497b7264dcd2ba& language=en-US&query=${searchInput}`)
+            .then((res) => {
+                setMovie(res.data.results)
             
-    //          })
-    //         .catch((err) => console.log(err))
-    //     },[searchInput])
+             })
+            .catch((err) => console.log(err))
+        },[searchInput])
 
 
     
@@ -117,7 +117,7 @@ function goToPreviousPage() {
                         <Card  className="shadow-lg p-1 mb-5 bg-body rounded " >
                             <img src={`${image}${mov.poster_path}`} alt="" className="imges"/>
 
-                            {IsClicked(movie.id) === undefined ? (
+                            {IsClicked(mov.id) == false ? (
                             <i className="fas fa-star text-dark text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
                              ):
                      (<i className="fas fa-star text-warning text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
