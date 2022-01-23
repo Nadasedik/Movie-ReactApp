@@ -7,31 +7,58 @@ import './MovieStyle.css'
 import {LanguageContext } from './../../Context/LanguageContext'
 import {useDispatch, useSelector} from 'react-redux';
 import {AddFav , RemoveFav} from './../../store/actions/FavAction';
-import axios from 'axios';
-import getMovies from './../../store/actions/movie'
+import axios from 'axios'
 
 const Movies = () => {
 
-    const image='https://image.tmdb.org/t/p/w500'
+   const image='https://image.tmdb.org/t/p/w500'
    const [movie, setMovie] = useState([]);
-  // const[sMovie,setSearchvalue]=useState([]);
+   const [currentPage, setCurrentPage] = useState(1);
+   const{lang,setLang}=useContext(LanguageContext);
+   const dispatch = useDispatch();
+   const selector = useSelector((state) => state.Fav);
+
+   useEffect(() =>
+  
+   axiosInstance.get("/popular",
+       {
+           params: {
+               api_key: '11150438bab8902b7d497b7264dcd2ba',
+               language: 'en-US',
+               page: currentPage
+           }
+       })
+       .then((res) => setMovie(res.data.results))
+       .catch((err) => console.log(err))
+,[currentPage]);
+ 
+
+
+function goToPreviousPage() {
+    if(currentPage>1)
+     setCurrentPage(currentPage-1);
+  }
+  function goToNextPage() {  
+    setCurrentPage(currentPage+1);
+  }
+
     var [searchInput,setSearch]=useState("");
+
     const changeHandler=(e)=>{
         setSearch(e.target.value);
       }
-    const{lang,setLang}=useContext(LanguageContext);
+  
+
     const toggleLang=()=>{
         setLang(lang=== "en" ? "ar" : "en")
     }
 
-    const dispatch = useDispatch();
-    const selector = useSelector((state) => state.Fav);
-
+   
     let IsClicked = (id) => {
         let clicked = selector.find(movie => movie.id === id)
         return clicked;
     }
-
+  
     function addToFav  (e,mov)
     {
         if(e.target.className==='fas fa-star text-dark text-center fs-3 mt-3')
@@ -48,42 +75,20 @@ const Movies = () => {
             console.log("removed")
         }
     }
-    
-    const [currentPage, setCurrentPage] = useState(1);
-
-    function goToPreviousPage() {
-        if(currentPage>1)
-         setCurrentPage(currentPage-1);
-      }
-      function goToNextPage() {  
-        setCurrentPage(currentPage+1);
-      }
-
+   
 
     //   useEffect(() =>{
     //       console.log(searchInput)
     //     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=11150438bab8902b7d497b7264dcd2ba& language=en-US&query=${searchInput}`)
     //         .then((res) => {
-    //             setSearchvalue(res.data.results)
+    //             setMovie(res.data.results)
             
     //          })
     //         .catch((err) => console.log(err))
     //     },[searchInput])
 
-        //const movie = useSelector((state) => state.movie);
-    useEffect(() =>
-   // dispatch(getMovies(currentPage))
-        axiosInstance.get("/popular",
-            {
-                params: {
-                    api_key: '11150438bab8902b7d497b7264dcd2ba',
-                    language: 'en-US',
-                    page: currentPage
-                }
-            })
-            .then((res) => setMovie(res.data.results))
-            .catch((err) => console.log(err))
-,[currentPage]);
+
+    
     
     
     return (
@@ -114,7 +119,7 @@ const Movies = () => {
 
                             {IsClicked(movie.id) === undefined ? (
                             <i className="fas fa-star text-dark text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
-                            ):
+                             ):
                      (<i className="fas fa-star text-warning text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
                            )}
 

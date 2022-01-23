@@ -14,7 +14,7 @@ const Favorites=()=>{
         dispatch(RemoveFav(movi));
     }
 
-   var x= console.log(FavMov)  
+    console.log(FavMov)  
 
     return(
         <>
@@ -72,7 +72,3 @@ export default Favorites;
 
 
 
-// {isAuthunticated ?
-//     <Route path="/Favorites" exact component={Favorites}/>
-//     :<Route path="/LoginForm" exact component={LoginForm}/>}/>
-;

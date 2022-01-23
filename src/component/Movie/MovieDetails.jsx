@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useParams ,Link} from "react-router-dom";
 import axiosInstance from './../axiosConfig/axiosConfig';
-import {useDispatch,useSelector} from 'react-redux';
-import changeMovieDetailes from '../../store/actions/movieDetails'
 
 const MovieDetails=()=>{
 
      const params=useParams();
      const [movie,setMovie]=useState({});
     // const image='https://image.tmdb.org/t/p/w500'
-    //const movie= useSelector((state) => state.movieDetails);
-    //const dispatch=useDispatch();
 
      useEffect(()=>{
 
-        //dispatch(changeMovieDetailes(params.id))
 
         axiosInstance
         .get(`/${params.id}?api_key=11150438bab8902b7d497b7264dcd2ba&language=en-US/`)
