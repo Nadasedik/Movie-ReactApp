@@ -13,8 +13,8 @@ import getMovies from './../../store/actions/movie'
 const Movies = () => {
 
     const image='https://image.tmdb.org/t/p/w500'
-   const [movie, setMovie] = useState([]);
-  // const[sMovie,setSearchvalue]=useState([]);
+  // const [movie, setMovie] = useState([]);
+   const[sMovie,setSearchvalue]=useState([]);
     var [searchInput,setSearch]=useState("");
     const changeHandler=(e)=>{
         setSearch(e.target.value);
@@ -25,11 +25,11 @@ const Movies = () => {
     }
 
     const dispatch = useDispatch();
-    const selector = useSelector((state) => state.Fav);
+    const selector = useSelector((state) => state.Fav.Fav);
 
     let IsClicked = (id) => {
-        let clicked = selector.find(movie => movie.id === id)
-        return clicked;
+        return selector.find((el) => el.id === id)?true:false;
+        
     }
 
     function addToFav  (e,mov)
@@ -60,30 +60,31 @@ const Movies = () => {
       }
 
 
-    //   useEffect(() =>{
-    //       console.log(searchInput)
-    //     axios.get(`https://api.themoviedb.org/3/search/movie?api_key=11150438bab8902b7d497b7264dcd2ba& language=en-US&query=${searchInput}`)
-    //         .then((res) => {
-    //             setSearchvalue(res.data.results)
+      useEffect(() =>{
+          console.log(searchInput)
+        axios.get(`https://api.themoviedb.org/3/search/movie?api_key=11150438bab8902b7d497b7264dcd2ba& language=en-US&query=${searchInput}`)
+            .then((res) => {
+                setSearchvalue(res.data.results)
             
-    //          })
-    //         .catch((err) => console.log(err))
-    //     },[searchInput])
-
-        //const movie = useSelector((state) => state.movie);
-    useEffect(() =>
-   // dispatch(getMovies(currentPage))
-        axiosInstance.get("/popular",
-            {
-                params: {
-                    api_key: '11150438bab8902b7d497b7264dcd2ba',
-                    language: 'en-US',
-                    page: currentPage
-                }
-            })
-            .then((res) => setMovie(res.data.results))
+             })
             .catch((err) => console.log(err))
-,[currentPage]);
+        },[searchInput])
+
+        const movie = useSelector((state) => state.movie);
+    useEffect(() =>
+   dispatch(getMovies(currentPage))
+//         axiosInstance.get("/popular",
+//             {
+//                 params: {
+//                     api_key: '11150438bab8902b7d497b7264dcd2ba',
+//                     language: 'en-US',
+//                     page: currentPage
+//                 }
+//             })
+//             .then((res) => setMovie(res.data.results))
+//             .catch((err) => console.log(err))
+// ,[currentPage]
+);
     
     
     return (
@@ -112,9 +113,9 @@ const Movies = () => {
                         <Card  className="shadow-lg p-1 mb-5 bg-body rounded " >
                             <img src={`${image}${mov.poster_path}`} alt="" className="imges"/>
 
-                            {IsClicked(movie.id) === undefined ? (
+                            {IsClicked(mov.id) == false ? (
                             <i className="fas fa-star text-dark text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
-                            ):
+                             ):
                      (<i className="fas fa-star text-warning text-center fs-3 mt-3" onClick={(e)=>{addToFav(e,mov)}}></i>
                            )}
 

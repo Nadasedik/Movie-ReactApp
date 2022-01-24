@@ -7,14 +7,14 @@ import {RemoveFav} from './../../store/actions/FavAction'
 const Favorites=()=>{
 
     const dispatch = useDispatch();
-    const FavMov = useSelector(state => state.Fav);
+    const FavMov = useSelector(state => state.Fav.Fav);
     const image='https://image.tmdb.org/t/p/w500'
 
     let removeFavMov = (id,movi) => {
         dispatch(RemoveFav(movi));
     }
 
-   var x= console.log(FavMov)  
+   console.log(FavMov)  
 
     return(
         <>

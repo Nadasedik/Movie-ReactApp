@@ -3,10 +3,10 @@ import {Link} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 
 const Navbar =()=>{
-  const selector = useSelector(state => state.Fav);
+  const selector = useSelector(state => state.Fav.Fav);
 
     return(
-        <nav className="navbar navbar-expand-lg navbar-dark bg-info">
+        <nav className="navbar navbar-expand-md navbar-dark bg-info">
         <div className="container-fluid">
           <Link className="navbar-brand me-3" to="/">Movies</Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">

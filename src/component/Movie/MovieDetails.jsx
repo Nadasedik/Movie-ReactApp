@@ -23,7 +23,7 @@ const MovieDetails=()=>{
        
         })
         .catch((err) => console.log(err));
-     });
+     },[]);
     return(
         
         <div key={movie.id} className="col-8 shadow-lg p-1 mb-5 bg-body rounded text-center mx-auto mt-3" style={{ width: '60%' , height:'50%'}}>
